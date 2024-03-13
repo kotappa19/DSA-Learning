@@ -1,0 +1,20 @@
+class Solution {
+    public int maxDepth(String s) {
+        int cnt = 0;
+        int ans = 0;
+        // the approach is if we encounter open bracket increment cnt and if its closed bracket decrement cnt
+        // check everytime if cnt is greater than ans to get the maximum depth
+        for(int i = 0; i < s.length(); i++) {
+            if(s.charAt(i) == '(') {
+                cnt += 1;
+            } else if(s.charAt(i) == ')') {
+                cnt -= 1;
+            }
+            
+            if(cnt > ans){
+                ans = cnt;
+            }   
+        }
+        return ans;
+    }
+}
