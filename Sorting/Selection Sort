@@ -1,0 +1,18 @@
+public class Solution {
+    public static void selectionSort(int[] arr) {
+        //Your code goes here
+        // consider ith element as small and start comparing from next element.
+        // find the smallest element from j to arr.length and swap it with ith element.
+        for(int i = 0; i < arr.length-1; i++) {
+            int smallIdx = i;
+            for(int j = i+1; j < arr.length; j++) {
+                if(arr[smallIdx] > arr[j]) {
+                    smallIdx = j;
+                }
+            }
+            int temp = arr[i];
+            arr[i] = arr[smallIdx];
+            arr[smallIdx] = temp;
+        }
+    }
+}
