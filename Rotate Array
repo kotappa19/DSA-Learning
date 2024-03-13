@@ -1,0 +1,21 @@
+class Solution {
+
+    public void reverse(int[] arr, int x, int y) {
+        while(x < y) {
+            System.out.println(x);
+            int temp = arr[x];
+            arr[x] = arr[y];
+            arr[y] = temp;
+            x += 1;
+            y -= 1;
+        }
+    }
+
+    public void rotate(int[] nums, int k) {
+        // to make k less than nums length
+        k %= nums.length;
+        reverse(nums, 0, nums.length-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, nums.length-1);
+    }
+}
