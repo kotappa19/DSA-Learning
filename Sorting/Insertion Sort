@@ -1,0 +1,19 @@
+public class Solution {
+    public static void insertionSort(int[] arr, int size) {
+        //Your code goes here
+        // make two parts sorted and unsorted
+        // consider unsorted part from index 1
+        // take the curr element as ith and compare it to previous all elements until its greater
+        // and place every elements one position next and when condition becomes false insert
+        // ith element.
+        for(int i = 1; i < arr.length; i++) {
+            int curr = arr[i];
+            int j = i-1;
+            while(j >= 0 && curr < arr[j]) {
+                arr[j+1] = arr[j];
+                j -= 1;
+            }
+            arr[j+1] = curr;
+        }
+    }
+}
