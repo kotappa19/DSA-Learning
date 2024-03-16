@@ -1,0 +1,40 @@
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        if(head == null || head.next == null) {
+            return null;
+        }
+        // take two pointers fast and slow and increment slow by one and fast by two
+        // if the two pointers meet break out bcoz loop exists
+        // but now we should find start of the loop so
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if(fast == slow) {
+                break;
+            }
+        }
+        // this means loop does not exist
+        if(fast == null || fast.next == null) {
+            return null;
+        }
+        // from the below we can find the start of the loop
+        while(head != slow) {
+            head = head.next;
+            slow = slow.next;
+        }
+        return head;
+    }
+}
