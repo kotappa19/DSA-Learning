@@ -1,0 +1,52 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        if(head.next == null) return true; // Time Complexity - O(n), Space Complexity - (1) 
+        // find the middle of the linked list 
+        ListNode slow = head;
+        ListNode fast = head;
+        while(fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // reverse the first half
+        ListNode prev = null;
+        ListNode curr = head;
+        ListNode latest = head.next;
+
+        while(curr != slow) {
+            curr.next = prev;
+            prev = curr;
+            curr = latest;
+            if(latest != null) {
+                latest = latest.next;
+            }
+        }
+        
+        // if odd number of elements, move mid pointer forward by one step, 
+        // for example []1, 2, 3, 2, 1] to compare we dont need middle one
+        if(fast != null) {
+            slow = slow.next;
+        }
+
+        // compare the first half and second half
+        while(slow != null && prev != null) {
+            if(slow.val != prev.val) {
+                return false;
+            }
+            slow = slow.next;
+            prev = prev.next;
+        }
+        return true;
+    }
+}
