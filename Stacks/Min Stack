@@ -1,0 +1,40 @@
+class MinStack { // Time: O(1), Space: O(1)
+    ArrayList<Integer> stack;
+    int min = Integer.MAX_VALUE;
+    public MinStack() {
+        stack = new ArrayList<>();
+    }
+    
+    // if the value of min changes add min also, by doing this we can keep track of previous min
+    public void push(int val) {
+        if(val <= min) {
+            stack.add(min);
+            min = val;
+        }
+        stack.add(val);
+    }
+    
+    // if removing val is min, then remove twice to get the previous min, by doing so will get previous min
+    public void pop() {
+        if(stack.remove(stack.size()-1) == min) {
+            min = stack.remove(stack.size()-1);
+        }
+    }
+    
+    public int top() {
+        return stack.get(stack.size()-1);
+    }
+    
+    public int getMin() {
+        return min;
+    }
+}
+
+/**
+ * Your MinStack object will be instantiated and called as such:
+ * MinStack obj = new MinStack();
+ * obj.push(val);
+ * obj.pop();
+ * int param_3 = obj.top();
+ * int param_4 = obj.getMin();
+ */
