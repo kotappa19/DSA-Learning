@@ -1,0 +1,22 @@
+class Solution { // Time: O(nums1.length + nums2.length), Space: O(nums1.length + nums2.length)
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        // monotonic stack
+        Stack<Integer> st = new Stack<>();
+        // hashmap to store the element and its next greater element
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums2.length; i++) {
+            // storing in stack in increasing order from top
+            while(!st.isEmpty() && nums2[i] > st.peek()) {
+                // storing the element and its next greater element in map
+                map.put(st.pop(), nums2[i]);
+            }
+            st.push(nums2[i]);
+        }   
+        // comparing if the map contains next greater element for first array
+        int[] ans = new int[nums1.length];
+        for(int i = 0; i < nums1.length; i++) {
+            ans[i] = map.getOrDefault(nums1[i], -1);
+        }
+        return ans;
+    }
+}
