@@ -1,0 +1,23 @@
+class Solution {
+    public int[] nextGreaterElements(int[] nums) {
+        // monotonic stack
+        Stack<Integer> st = new Stack<>();
+        // ans array
+        int ans[] = new int[nums.length];
+
+        // traverse from twice the length index, so it becomes circular
+        for(int i = nums.length*2-1; i >= 0; i--) {
+            // % operation to keep the index in the range of 0 to nums.length-1
+            int num = nums[i % nums.length];
+            // remove all the elements that are small or equal to nums[i] 
+            // so after that the top element will be next greater element for the nums[i]
+            while(!st.isEmpty() && st.peek() <= num) {
+                st.pop();
+            }
+            // stack empty means no next greater element
+            ans[i % nums.length] = st.isEmpty() ? -1 : st.peek();
+            st.push(num);
+        }
+        return ans;
+    }
+}
