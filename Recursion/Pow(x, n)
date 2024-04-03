@@ -1,0 +1,16 @@
+class Solution {
+    public double myPow(double x, int n) {
+        if(n == 0) {
+            return 1;
+        }
+        if(n < 0) {
+            n = -n; //convert it to positive
+            return 1 / (x * myPow(x, n-1)); // 1 / positive is negative
+        }
+        double half = myPow(x, n/2);
+        if(n % 2 == 0) {
+            return half * half; // for even n 2^4 = 2^2 * 2^2 so calculating for half is enough
+        }
+        return x * half * half; // 2^5 = 2^2 * 2^2 * 2 for odd n
+    }
+}
