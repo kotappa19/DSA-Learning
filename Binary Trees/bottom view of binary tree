@@ -1,0 +1,60 @@
+/*********************************************
+
+ Following is the TreeNode class structure
+
+ class TreeNode {
+     int val;
+     TreeNode left;
+     TreeNode right;
+    
+     TreeNode(int val) {
+         this.val = val;
+         this.left = null;
+         this.right = null;
+     }
+ }
+
+ *********************************************/
+
+import java.util.*;
+
+public class Solution { //Time: O(nlogn), Space: O(n)
+    public static List<Integer> bottomView(TreeNode root) {
+        Queue<Pair> q = new LinkedList<>();
+        // store the vertical order of nodes
+        Map<Integer, List<Integer>> map = new TreeMap<>();
+        q.add(new Pair(0, root));
+        while(!q.isEmpty()) {
+            Pair pair = q.remove();
+            if(map.containsKey(pair.hd)) {
+                map.get(pair.hd).add(pair.node.val);
+            } else {
+                List<Integer> list = new ArrayList<>();
+                list.add(pair.node.val);
+                map.put(pair.hd, list);
+            }
+            if(pair.node.left != null) {
+                q.add(new Pair(pair.hd-1, pair.node.left));
+            }
+            if(pair.node.right != null) {
+                q.add(new Pair(pair.hd+1, pair.node.right));
+            }
+        }
+        // store only last element in res array 
+        List<Integer> res = new ArrayList<>();
+        for(Map.Entry<Integer, List<Integer>> entry : map.entrySet()) {
+            int lastIdx = entry.getValue().size()-1;
+            res.add(entry.getValue().get(lastIdx));
+        }
+        return res;
+    }
+}
+class Pair {
+    int hd;
+    TreeNode node;
+
+    Pair(int hd, TreeNode node) {
+        this.hd = hd;
+        this.node = node;
+    }
+}
