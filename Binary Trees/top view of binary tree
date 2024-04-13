@@ -1,0 +1,57 @@
+/*********************************************
+
+ Following is the TreeNode class structure
+
+ class TreeNode {
+     int data;
+     TreeNode left;
+     TreeNode right;
+
+     TreeNode(int data) {
+         this.data = data;
+         this.left = null;
+         this.right = null;
+     }
+ }
+
+ *********************************************/
+
+import java.util.*;
+
+public class Solution { // Time: O(nlogn), Space: O(n)
+    public static List<Integer> getTopView(TreeNode root) {
+        // Write your code here.
+        Queue<Pair> q = new LinkedList<>();
+        // map to store the top values of every horizontal distance
+        Map<Integer, Integer> map = new TreeMap<>();
+        q.add(new Pair(0, root));
+        while(!q.isEmpty()) {
+            Pair pair = q.remove();
+            // check if top value is already present for the current hd value?
+            if(!map.containsKey(pair.vd)) {
+                map.put(pair.vd, pair.node.data);
+            }
+            if(pair.node.left != null) {
+                q.add(new Pair(pair.vd-1, pair.node.left));
+            }
+            if(pair.node.right != null) {
+                q.add(new Pair(pair.vd+1, pair.node.right));
+            }
+        }
+        List<Integer> ans = new ArrayList<>();
+        for(Map.Entry<Integer, Integer> entry: map.entrySet()) {
+            ans.add(entry.getValue());
+        }
+        return ans;
+    }
+}
+
+class Pair {
+    int vd;
+    TreeNode node;
+
+    Pair(int vd, TreeNode node) {
+        this.vd = vd;
+        this.node = node;
+    }
+}
