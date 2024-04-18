@@ -1,0 +1,16 @@
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Solution { // Time: O(n), Space: O(1)
+    public static boolean isValidBST(int []order){
+        // Write your code here.
+        for(int i = 0; i < order.length-1; i++) {
+            if(order[i] >= order[i+1]) {
+                return false;
+            }
+        }
+        return true;
+        
+    }
+}
