@@ -1,0 +1,20 @@
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class Solution { // Time: O(n log k), Space: O(k)
+
+	public static ArrayList<Integer> kLargest(int n, int[] input, int k) {
+		// Write your code here
+		// elements are stored in increasing order
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+		for(int i = 0; i < input.length; i++) {
+			minHeap.add(input[i]);
+			// remove smallest element from the heap so that result contains only k largest elements
+			if(minHeap.size() > k) {
+				minHeap.poll();
+			}
+		}
+		return new ArrayList<>(minHeap);
+	}
+}
