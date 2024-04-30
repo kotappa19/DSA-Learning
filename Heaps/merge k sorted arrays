@@ -1,0 +1,23 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution // Time: O(nlogn), Space: O(n)
+{
+	public static ArrayList<Integer> mergeKSortedArrays(ArrayList<ArrayList<Integer>> kArrays, int k)
+	{
+		// Write your code here.
+		PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+		for(int i = 0; i < kArrays.size(); i++) {
+			for(int j = 0; j < kArrays.get(i).size(); j++) {
+				minHeap.add(kArrays.get(i).get(j));
+			}
+		}
+		ArrayList<Integer> list = new ArrayList<>();
+		// while removing, elements are removed in asceding order
+		while(!minHeap.isEmpty()) {
+			list.add(minHeap.poll());
+		}
+		return list;
+	}
+}
