@@ -1,0 +1,33 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.PriorityQueue;
+public class Solution { // Time: O(nlogn), Space: O(n)
+    public static List<Integer> replaceWithRank(List<Integer> arr, int n) {
+        // Write your code here
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        for(int num : arr) {
+            minHeap.add(num);
+        }
+
+        // elements are removed in asceding order, so we can assign rank to them
+        HashMap<Integer, Integer> map = new HashMap<>();
+        int rank = 1;
+        while(!minHeap.isEmpty()) {
+            int ele = minHeap.poll();
+            // for same element rank should be same, so we are not incrementing rank 
+            // if the element is already present
+            if(!map.containsKey(ele)) {
+                map.put(ele, rank);
+                rank += 1;
+            }
+        }
+
+        // replacing the element by its rank
+        List<Integer> result = new ArrayList<>();
+        for(int num : arr) {
+            result.add(map.get(num));
+        }
+        return result;
+    }
+}
