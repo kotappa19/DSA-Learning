@@ -1,0 +1,74 @@
+//{ Driver Code Starts
+// Initial Template for Java
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =
+            new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+        while (T-- > 0) {
+            String[] s = br.readLine().trim().split(" ");
+            int V = Integer.parseInt(s[0]);
+            int E = Integer.parseInt(s[1]);
+            ArrayList<ArrayList<Integer>> adj =
+                new ArrayList<ArrayList<Integer>>();
+            for (int i = 0; i < V; i++) adj.add(new ArrayList<Integer>());
+            for (int i = 0; i < E; i++) {
+                String[] S = br.readLine().trim().split(" ");
+                int u = Integer.parseInt(S[0]);
+                int v = Integer.parseInt(S[1]);
+                adj.get(u).add(v);
+                adj.get(v).add(u);
+            }
+            Solution obj = new Solution();
+            ArrayList<Integer> ans = obj.dfsOfGraph(V, adj);
+            for (int i = 0; i < ans.size(); i++)
+                System.out.print(ans.get(i) + " ");
+            System.out.println();
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+class Solution { // Time and Space: O(V+E) where V : vertices, E : Edges
+    // Function to return a list containing the DFS traversal of the graph.
+    public void dfs(int vertex, ArrayList<ArrayList<Integer>> adj, int visited[], int parent[], 
+    ArrayList<Integer> ans) {
+        // mark vertex as visited
+        visited[vertex] = 1;
+        
+        // extract the neighbours of a vertex
+        ArrayList<Integer> neighbours = adj.get(vertex);
+        for(int i = 0; i < neighbours.size(); i++) {
+            int neighbour = neighbours.get(i);
+            if(visited[neighbour] == 0) { // neighbour need to be explored
+                ans.add(neighbour);
+                parent[neighbour] = vertex; // determine the parent
+                // recursively call the function with neighbour until we reach dead end
+                // if we reach dead end it will go back to the previous with the help of internal stack
+                dfs(neighbour, adj, visited, parent, ans);
+            }
+        }
+        
+    }
+    
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Code here
+        int visited[] = new int[V];
+        int parent[] = new int[V];
+        
+        ArrayList<Integer> ans = new ArrayList<>();
+        ans.add(0); // add source vertex
+        
+        for(int i = 0; i < V; i++) {
+            visited[i] = 0;
+            parent[i] = -1;
+        }
+        dfs(0, adj, visited, parent, ans);
+        return ans;
+    }
+}
