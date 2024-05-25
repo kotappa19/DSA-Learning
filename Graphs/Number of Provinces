@@ -1,0 +1,41 @@
+class Solution { // Time: O(n2), Space: O(n2)
+    public ArrayList<ArrayList<Integer>> findAdjList(int[][] isConnected) {
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        for(int i = 0; i < isConnected.length; i++) {
+            ArrayList<Integer> list = new ArrayList<>();
+            for(int j = 0; j < isConnected[i].length; j++) {
+                if(isConnected[i][j] == 1 && i != j) {
+                    list.add(j);
+                }
+            }
+            adj.add(list);
+        }
+        return adj;
+    }
+    public void dfs(int vertex, ArrayList<ArrayList<Integer>> adj, int[] visited) {
+        visited[vertex] = 1;
+        ArrayList<Integer> neighbours = adj.get(vertex);
+        for(int i = 0; i < neighbours.size(); i++) {
+            int neighbour = neighbours.get(i);
+            if(visited[neighbour] == 0) {
+                dfs(neighbour, adj, visited);
+            }
+        }
+    }
+    public int findCircleNum(int[][] isConnected) {
+        // Convert to adjacency list
+        ArrayList<ArrayList<Integer>> adj = findAdjList(isConnected);
+        int provinces = 0;
+        int[] visited = new int[isConnected.length];
+        for(int i = 0; i < isConnected.length; i++) {
+            visited[i] = 0;
+        }
+        for(int i = 0; i < isConnected.length; i++) {
+            if(visited[i] == 0) {
+                provinces += 1;
+                dfs(i, adj, visited);
+            }
+        }
+        return provinces;
+    }
+}
